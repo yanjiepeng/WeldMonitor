@@ -35,7 +35,7 @@
             android:id="@+id/tv_attendanceName1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="wangnima"
+            android:text="老王"
             android:textSize="@dimen/DIMEN_24PX"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Large"/>
@@ -67,7 +67,7 @@
                 android:id="@+id/tv_attendanceName2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="wangnima"
+                android:text="老李"
                 android:gravity="center"
                 android:textSize="@dimen/DIMEN_24PX"
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Large"/>
@@ -98,7 +98,7 @@
                 android:id="@+id/tv_attendanceName3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="wangnima"
+                android:text="老张"
                 android:gravity="center"
                 android:textSize="@dimen/DIMEN_24PX"
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Large"/>

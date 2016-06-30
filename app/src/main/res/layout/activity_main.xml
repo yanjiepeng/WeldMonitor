@@ -31,6 +31,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:layout_marginTop="@dimen/DIMEN_3PX"
             android:background="@drawable/corner_no_fill">
 
             <include layout="@layout/box_produce" />
@@ -42,6 +43,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:layout_marginTop="@dimen/DIMEN_3PX"
             android:background="@drawable/corner_no_fill">
             <include layout="@layout/box_robot_state" />
         </LinearLayout>
@@ -51,6 +53,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:layout_marginTop="@dimen/DIMEN_3PX"
             android:background="@drawable/corner_no_fill">
             <include layout="@layout/pro_statistics" />
         </LinearLayout>

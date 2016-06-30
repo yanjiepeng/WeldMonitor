@@ -7,7 +7,7 @@
     <TextView
         style="@style/TextAppearance.AppCompat.Title.Inverse"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_40PX"
+        android:layout_height="@dimen/DIMEN_50PX"
         android:background="@color/colorPrimary"
         android:gravity="center"
         android:text="@string/robot_state" />
@@ -15,7 +15,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_40PX"
-        android:layout_marginTop="@dimen/DIMEN_10PX"
+        android:layout_marginTop="@dimen/DIMEN_5PX"
         android:paddingLeft="@dimen/DIMEN_20PX">
 
         <TextView
@@ -24,14 +24,19 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/weld_robot1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textSize="@dimen/DIMEN_20PX"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <TextView
             android:id="@+id/tv_weld1State"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/green_circle" />
+            android:gravity="center_vertical"
+            android:text="正常"
+            android:textSize="@dimen/DIMEN_20PX"
+            android:drawableRight="@mipmap/green_circle"
+           />
 
         <TextView
             android:layout_width="0dp"
@@ -39,6 +44,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/weld_robot2"
+            android:textSize="@dimen/DIMEN_20PX"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <TextView
@@ -46,13 +52,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/red_circle" />
+            android:text="正常"
+            android:textSize="@dimen/DIMEN_20PX"
+            android:drawableRight="@mipmap/green_circle"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_40PX"
-        android:layout_marginTop="@dimen/DIMEN_10PX"
+        android:layout_marginTop="@dimen/DIMEN_5PX"
         android:paddingLeft="@dimen/DIMEN_20PX">
 
         <TextView
@@ -60,6 +68,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
+            android:textSize="@dimen/DIMEN_20PX"
             android:text="@string/weld_robot3"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
@@ -68,7 +77,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/green_circle" />
+            android:textSize="@dimen/DIMEN_20PX"
+            android:gravity="center_vertical"
+            android:text="异常"
+            android:drawableRight="@mipmap/red_circle" />
 
         <TextView
             android:layout_width="0dp"
@@ -76,6 +88,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/material_robot1"
+            android:textSize="@dimen/DIMEN_20PX"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <TextView
@@ -83,13 +96,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/red_circle" />
+            android:textSize="@dimen/DIMEN_20PX"
+            android:gravity="center_vertical"
+            android:text="异常"
+            android:drawableRight="@mipmap/red_circle" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_40PX"
-        android:layout_marginTop="@dimen/DIMEN_10PX"
+        android:layout_marginTop="@dimen/DIMEN_5PX"
         android:paddingLeft="@dimen/DIMEN_20PX">
 
         <TextView
@@ -98,6 +114,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/carry_robot"
+            android:textSize="@dimen/DIMEN_20PX"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <TextView
@@ -105,7 +122,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/green_circle" />
+            android:src="@mipmap/light_normal"
+            android:textSize="@dimen/DIMEN_20PX"
+            android:gravity="center_vertical"
+            android:text="离线"
+            android:drawableRight="@mipmap/gray_circle"/>
+
 
         <TextView
             android:layout_width="0dp"
@@ -119,34 +141,5 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/DIMEN_40PX"
-        android:layout_marginTop="@dimen/DIMEN_10PX"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/DIMEN_20PX"
-            android:text="正常："
-            android:drawableRight="@mipmap/green_circle"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/DIMEN_20PX"
-            android:text="停止："
-            android:drawableRight="@mipmap/red_circle"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/DIMEN_20PX"
-            android:text="故障："
-            android:drawableRight="@mipmap/yellow_circle"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-    </LinearLayout>
-
 
 </LinearLayout>
