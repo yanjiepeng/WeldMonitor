@@ -13,9 +13,9 @@ public class Util {
 
     //
     private static final String REMOTE_IP = DataTag.REMOTE_IP;
-    private static final String URL = "jdbc:mysql://"
+    private static final String URL = "jdbc:postgresql://"
             + REMOTE_IP
-            + ":3306/nc?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8";
+            + ":5432/tf?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8";
     private static final String USER = DataTag.USER;
     private static final String PASSWORD = DataTag.PASSWORD ;
     public static Connection conn;
@@ -25,7 +25,7 @@ public class Util {
                                              String password) {
         Connection conn = null;
         try {
-            final String DRIVER_NAME = "com.mysql.jdbc.Driver";
+            final String DRIVER_NAME = "org.postgresql.Driver";
             Class.forName(DRIVER_NAME);
             conn = DriverManager.getConnection(url, user, password);
             if (conn != null)

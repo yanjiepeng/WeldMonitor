@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Title.Inverse"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50PX"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="@string/attendance" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+        <ImageView
+            android:id="@+id/iv_attendanceHead1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_120PX"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/head" />
+
+        <TextView
+            android:id="@+id/tv_attendanceName1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="wangnima"
+            android:textSize="@dimen/DIMEN_24PX"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Large"/>
+            <TextView
+                android:id="@+id/tv_attendanceId1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="123"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/iv_attendanceHead2"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_height="@dimen/DIMEN_120PX"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/head" />
+
+            <TextView
+                android:id="@+id/tv_attendanceName2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="wangnima"
+                android:gravity="center"
+                android:textSize="@dimen/DIMEN_24PX"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Large"/>
+            <TextView
+                android:id="@+id/tv_attendanceId2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="123"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/iv_attendanceHead3"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_height="@dimen/DIMEN_120PX"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/head" />
+
+            <TextView
+                android:id="@+id/tv_attendanceName3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="wangnima"
+                android:gravity="center"
+                android:textSize="@dimen/DIMEN_24PX"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Large"/>
+            <TextView
+                android:id="@+id/tv_attendanceId3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="123"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

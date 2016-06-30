@@ -2,6 +2,8 @@ package com.zk.application;
 
 import android.app.Application;
 
+import com.zk.utils.L;
+
 /**
  * Created by Administrator on 2016/6/29.
  */
@@ -17,5 +19,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this ;
+        L.isDebug = true;
     }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50PX"
+        android:background="@color/colorPrimary"
+        android:text="@string/produce_state"
+        android:gravity="center"
+        style="@style/TextAppearance.AppCompat.Title.Inverse"
+        />
+    <include layout="@layout/list_header" />
+    <ListView
+        android:id="@+id/lv_produce"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
+</LinearLayout>

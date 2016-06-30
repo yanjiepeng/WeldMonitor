@@ -19,31 +19,106 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:background="@drawable/corner_no_fill"
             android:orientation="vertical">
 
+            <include layout="@layout/box_attendance" />
+
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/corner_no_fill">
+
+            <include layout="@layout/box_produce" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/corner_no_fill">
+            <include layout="@layout/box_robot_state" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/corner_no_fill">
+            <include layout="@layout/pro_statistics" />
         </LinearLayout>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:orientation="vertical">
+        android:layout_marginLeft="@dimen/DIMEN_20PX"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:background="@drawable/corner_no_fill">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+
+            >
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Title.Inverse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="@string/weld_electricity"
+                android:paddingTop="@dimen/DIMEN_10PX"
+                android:paddingBottom="@dimen/DIMEN_10PX"/>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lc_weldelec"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </com.github.mikephil.charting.charts.LineChart>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Title.Inverse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="@string/weld_voltage"
+                android:paddingTop="@dimen/DIMEN_10PX"
+                android:paddingBottom="@dimen/DIMEN_10PX"/>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lc_weldvol"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </com.github.mikephil.charting.charts.LineChart>
+
+        </LinearLayout>
 
     </LinearLayout>
-
 </LinearLayout>
+
+
+

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        style="@style/TextAppearance.AppCompat.Title.Inverse"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50PX"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="@string/statistics" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_proTotal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_100PX"
+                android:gravity="center"
+                style="@style/Base.TextAppearance.AppCompat.Display2"
+                android:text="40"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="预计生产量"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_proProduced"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_100PX"
+                android:gravity="center"
+                style="@style/Base.TextAppearance.AppCompat.Display2"
+                android:text="40"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="已生产"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_proRemain"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_100PX"
+                android:gravity="center"
+                style="@style/Base.TextAppearance.AppCompat.Display2"
+                android:text="40"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="未完成"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
