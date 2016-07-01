@@ -24,19 +24,18 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/weld_robot1"
-            android:textSize="@dimen/DIMEN_20PX"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="@dimen/DIMEN_20PX" />
 
         <TextView
             android:id="@+id/tv_weld1State"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:drawableRight="@mipmap/green_circle"
             android:gravity="center_vertical"
             android:text="正常"
-            android:textSize="@dimen/DIMEN_20PX"
-            android:drawableRight="@mipmap/green_circle"
-           />
+            android:textSize="@dimen/DIMEN_20PX" />
 
         <TextView
             android:layout_width="0dp"
@@ -44,17 +43,17 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/weld_robot2"
-            android:textSize="@dimen/DIMEN_20PX"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/DIMEN_20PX" />
 
         <TextView
             android:id="@+id/tv_weld2State"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:drawableRight="@mipmap/green_circle"
             android:text="正常"
-            android:textSize="@dimen/DIMEN_20PX"
-            android:drawableRight="@mipmap/green_circle"/>
+            android:textSize="@dimen/DIMEN_20PX" />
     </LinearLayout>
 
     <LinearLayout
@@ -68,19 +67,94 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:textSize="@dimen/DIMEN_20PX"
             android:text="@string/weld_robot3"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/DIMEN_20PX" />
 
         <TextView
             android:id="@+id/tv_weld3State"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="@dimen/DIMEN_20PX"
+            android:drawableRight="@mipmap/red_circle"
             android:gravity="center_vertical"
             android:text="异常"
-            android:drawableRight="@mipmap/red_circle" />
+            android:textSize="@dimen/DIMEN_20PX" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/weld_robot4"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="@dimen/DIMEN_20PX" />
+
+        <TextView
+            android:id="@+id/tv_weld4State"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableRight="@mipmap/green_circle"
+            android:gravity="center_vertical"
+            android:text="正常"
+            android:textSize="@dimen/DIMEN_20PX" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_40PX"
+        android:layout_marginTop="@dimen/DIMEN_5PX"
+        android:paddingLeft="@dimen/DIMEN_20PX">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/weld_robot5"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="@dimen/DIMEN_20PX" />
+
+        <TextView
+            android:id="@+id/tv_weld5State"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableRight="@mipmap/green_circle"
+            android:gravity="center_vertical"
+            android:text="正常"
+            android:textSize="@dimen/DIMEN_20PX" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/weld_robot6"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="@dimen/DIMEN_20PX" />
+
+        <TextView
+            android:id="@+id/tv_weld6State"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableRight="@mipmap/green_circle"
+            android:gravity="center_vertical"
+            android:text="正常"
+            android:textSize="@dimen/DIMEN_20PX" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_40PX"
+        android:layout_marginTop="@dimen/DIMEN_5PX"
+        android:paddingLeft="@dimen/DIMEN_20PX">
 
         <TextView
             android:layout_width="0dp"
@@ -88,25 +162,19 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/material_robot1"
-            android:textSize="@dimen/DIMEN_20PX"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/DIMEN_20PX" />
 
         <TextView
             android:id="@+id/tv_materialrobotState"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="@dimen/DIMEN_20PX"
+            android:drawableRight="@mipmap/red_circle"
             android:gravity="center_vertical"
             android:text="异常"
-            android:drawableRight="@mipmap/red_circle" />
-    </LinearLayout>
+            android:textSize="@dimen/DIMEN_20PX" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_40PX"
-        android:layout_marginTop="@dimen/DIMEN_5PX"
-        android:paddingLeft="@dimen/DIMEN_20PX">
 
         <TextView
             android:layout_width="0dp"
@@ -114,32 +182,19 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/carry_robot"
-            android:textSize="@dimen/DIMEN_20PX"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/DIMEN_20PX" />
 
         <TextView
             android:id="@+id/tv_carrierState"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@mipmap/light_normal"
-            android:textSize="@dimen/DIMEN_20PX"
+            android:drawableRight="@mipmap/red_circle"
             android:gravity="center_vertical"
-            android:text="离线"
-            android:drawableRight="@mipmap/gray_circle"/>
-
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:text="异常"
+            android:textSize="@dimen/DIMEN_20PX" />
     </LinearLayout>
-
 </LinearLayout>
+
+

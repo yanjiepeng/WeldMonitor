@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeldMonitor</string>
+    <string name="app_name">泰富重装</string>
     <string name="title_name">泰富重装托辊焊接线</string>
     <string name="attendance">当日排班人员</string>
     <string name="produce_state">当日生产状况</string>
@@ -10,6 +10,9 @@
     <string name="weld_robot1">焊接机器人1</string>
     <string name="weld_robot2">焊接机器人2</string>
     <string name="weld_robot3">焊接机器人3</string>
+    <string name="weld_robot4">焊接机器人4</string>
+    <string name="weld_robot5">焊接机器人5</string>
+    <string name="weld_robot6">焊接机器人6</string>
     <string name="material_robot1">上料机器人</string>
     <string name="carry_robot">搬运机器人</string>
     <string name="weld_electricity">焊接机器人电流</string>
