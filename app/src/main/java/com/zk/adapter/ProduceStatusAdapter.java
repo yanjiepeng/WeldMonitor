@@ -37,7 +37,10 @@ public class ProduceStatusAdapter extends RecyclerView.Adapter<MyViewHolder> {
     //通过viewholder修改数据
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-
+            holder.tv_produceId.setText(mDatas.get(position).getId());
+        holder.tv_produceName.setText(mDatas.get(position).getName());
+        holder.tv_produceStatus.setText(mDatas.get(position).getStatus());
+        holder.tv_produceTime.setText(mDatas.get(position).getTime());
     }
 
     @Override
@@ -52,13 +55,13 @@ class MyViewHolder extends RecyclerView.ViewHolder {
      TextView tv_produceId;
      TextView tv_produceName;
      TextView tv_produceTime;
-     TextView getTv_produceStatus;
+     TextView tv_produceStatus;
 
     public MyViewHolder(View itemView) {
         super(itemView);
         tv_produceId = (TextView) itemView.findViewById(R.id.tv_produceID);
         tv_produceName = (TextView) itemView.findViewById(R.id.tv_produceName);
         tv_produceTime = (TextView) itemView.findViewById(R.id.tv_produceTime);
-        getTv_produceStatus = (TextView) itemView.findViewById(R.id.tv_produceStatus);
+        tv_produceStatus = (TextView) itemView.findViewById(R.id.tv_produceStatus);
     }
 }

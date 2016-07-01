@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,13 +21,18 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.zk.adapter.ProduceStatusAdapter;
 import com.zk.entity.DataTag;
+import com.zk.entity.ProduceStatus;
 import com.zk.task.MyTask;
 import com.zk.task.MyTaskInterface;
+import com.zk.utils.DividerItemDecoration;
+import com.zk.utils.FormatUtil;
 import com.zk.utils.L;
 import com.zk.utils.Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,13 +81,21 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tv_proRemain)
     TextView tvProRemain;
 
+    private List<ProduceStatus> datas ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         initActionBar();
         ButterKnife.bind(this);
+
+
+        initProduceData();
+        initView();
+
+        //初始话数据图格式和数据
         initChartWidget(lcWeldelec);
         initChartWidget(lcWeldvol);
         setData(20, 40, lcWeldelec);
@@ -111,7 +125,30 @@ public class MainActivity extends AppCompatActivity {
 
         myTask.execute("conn");
 
+    }
+    /*
+    初始化生产情况列表
+         */
+    private void initProduceData() {
 
+        datas = new ArrayList<ProduceStatus>();
+        for (int i = 0; i < 10; i++) {
+            ProduceStatus ps = new ProduceStatus();
+            ps.setId(""+i);
+            ps.setName("工件" + i);
+            ps.setTime(FormatUtil.refFormatNowDate());
+            ps.setStatus("正常");
+            datas.add(ps) ;
+        }
+
+    }
+
+    private void initView() {
+        //设置RecylerView为list效果并设置分割线
+        lvProduce.setLayoutManager(new LinearLayoutManager(this));
+        lvProduce.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+        ProduceStatusAdapter mAdapter = new ProduceStatusAdapter(this , datas);
+        lvProduce.setAdapter(mAdapter);
     }
 
     private void initChartWidget(LineChart lcWeldelec) {

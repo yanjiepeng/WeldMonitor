@@ -10,6 +10,9 @@ public class ProduceStatus {
     String time ;
     String status ;
 
+    public ProduceStatus() {
+    }
+
     public ProduceStatus(String id, String name, String status, String time) {
         this.id = id;
         this.name = name;

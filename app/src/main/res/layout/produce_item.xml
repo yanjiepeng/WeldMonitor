@@ -7,21 +7,32 @@
     <TextView
         android:id="@+id/tv_produceID"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textAppearance="@style/Widget.AppCompat.ListView" />
+
     <TextView
         android:id="@+id/tv_produceName"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textAppearance="@style/Widget.AppCompat.ListView" />
+
     <TextView
         android:id="@+id/tv_produceStatus"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textAppearance="@style/Widget.AppCompat.ListView" />
+
     <TextView
         android:id="@+id/tv_produceTime"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textAppearance="@style/Widget.AppCompat.ListView" />
 </LinearLayout>
