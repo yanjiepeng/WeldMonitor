@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @BindView(R.id.lv_produce)
-    ListView lvProduce;
+    RecyclerView lvProduce;
     @BindView(R.id.tv_weld1State)
     TextView tvWeld1State;
     @BindView(R.id.tv_weld2State)

@@ -32,4 +32,5 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     apt 'com.jakewharton:butterknife-compiler:8.0.0'
     compile files('libs/postgresql-9.4.1208.jre7.jar')
+    compile 'com.android.support:recyclerview-v7:24.0.0-beta1'
 }
