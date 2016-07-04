@@ -2,6 +2,7 @@ package com.zk.entity;
 
 /**
  * Created by Administrator on 2016/7/1.
+ * 机器人运行状态实例
  */
 public class RobotStatus {
     int weld1;

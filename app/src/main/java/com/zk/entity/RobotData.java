@@ -2,6 +2,7 @@ package com.zk.entity;
 
 /**
  * Created by Administrator on 2016/7/1.
+ * 机器人电流电压数据
  */
 public class RobotData {
     double weld_vol_1;

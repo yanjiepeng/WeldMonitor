@@ -49,7 +49,11 @@ public class ProduceStatusAdapter extends RecyclerView.Adapter<MyViewHolder> {
     }
 }
 
-
+   /**
+   	 * viewholder复用
+   	 * @author Yan jiepeng
+   	 * @time 2016/7/4 17:23
+   	 */
 class MyViewHolder extends RecyclerView.ViewHolder {
 
      TextView tv_produceId;

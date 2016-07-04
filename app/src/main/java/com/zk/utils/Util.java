@@ -15,6 +15,7 @@ import java.util.Map;
 import com.zk.entity.DataTag;
 import com.zk.entity.RobotData;
 import com.zk.entity.RobotStatus;
+import com.zk.entity.User;
 
 /**
  * Created by Administrator on 2016/6/27.
@@ -88,7 +89,7 @@ public class Util {
     /*
      请求用户数据
      */
-    public static byte[] QueryHeadImageById(int  id) throws SQLException {
+    public static byte[] QueryHeadImageById(int id) throws SQLException {
 
         byte[] img = new byte[1024];
         if (conn == null) {
@@ -97,12 +98,12 @@ public class Util {
         Statement stmt = null;
         ResultSet rs = null;
 
-        String sql = "select image  from userinfo where id = '"+id+"' ";
+        String sql = "select image  from userinfo where id = '" + id + "' ";
 
         stmt = conn.createStatement();
         if (stmt != null) {
             rs = stmt.executeQuery(sql);
-            while ( rs.next() ) {
+            while (rs.next()) {
                 img = rs.getBytes("image");
             }
         }
@@ -110,6 +111,35 @@ public class Util {
         rs.close();
         stmt.close();
         return img;
+
+    }
+
+    /*
+    请求用户的姓名 工号 数据 用于显示值班人员信息
+ */
+    public static User QueryUserData(int id) throws SQLException {
+
+
+        User u = null;
+        if (conn == null) {
+            return null;
+        }
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        String sql = "select u_num,u_name  from userinfo where id = '" + id + "' ";
+
+        stmt = conn.createStatement();
+        if (stmt != null) {
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                u = new User(rs.getString("u_name"), rs.getString("u_num"));
+            }
+        }
+
+        rs.close();
+        stmt.close();
+        return u;
 
     }
 
@@ -127,7 +157,7 @@ public class Util {
         String sql = "select c_r1 , c_r2 , c_r3 ,c_r4 ,c_r5 , c_r6 , v_r1 ,v_r2 ,v_r3 , v_r4 ,v_r5 ,v_r6 , t_run from linestate";
 
         stmt = conn.createStatement();
-        RobotData data  = new RobotData();
+        RobotData data = new RobotData();
         if (stmt != null) {
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -153,6 +183,7 @@ public class Util {
         stmt.close();
         return data;
     }
+
     /*
 
 

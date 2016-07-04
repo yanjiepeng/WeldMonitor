@@ -24,6 +24,10 @@ import java.sql.Time;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/*
+   数据获取服务
+ */
+
 public class ScalService extends Service {
     Timer timer = new Timer();
 
@@ -34,7 +38,7 @@ public class ScalService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         timer.schedule(new RobotStautsTask(), 0, 5000);
-        timer.schedule(new RobotDataThread() , 0 ,5000);
+        timer.schedule(new RobotDataThread(), 0, 5000);
         new LoadImageThread().start();
 
         return super.onStartCommand(intent, flags, startId);
@@ -46,8 +50,10 @@ public class ScalService extends Service {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-
-    class RobotDataThread extends TimerTask {
+/*
+    Electricity and voltage of robots
+ */
+private class RobotDataThread extends TimerTask {
 
         @Override
         public void run() {
@@ -56,44 +62,49 @@ public class ScalService extends Service {
                     RobotData data = Util.QueryRobotDatas();
                     if (data != null) {
                         EventBus.getDefault().post(new EventData(data));
-                        L.e("EVENTBUS 传输机器人电流电压数据" +data.toString());
+                        L.e("EVENTBUS 传输机器人电流电压数据" + data.toString());
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-
         }
-
     }
-        private class RobotStautsTask extends TimerTask {
 
-            @Override
-            public void run() {
 
-                if (DataTag.MYSQL_CONNECT_FLAG) {
-                    try {
-                        RobotStatus status = Util.QueryRobotStatus();
-                        if (status != null) {
-                            EventBus.getDefault().post(new EventRbs(status));
-                            L.e("EVENTBUS 传输机器人状态数据" + status.toString());
-                        }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+    /*
+        get robot operation status data
+     */
+    private class RobotStautsTask extends TimerTask {
+
+        @Override
+        public void run() {
+
+            if (DataTag.MYSQL_CONNECT_FLAG) {
+                try {
+                    RobotStatus status = Util.QueryRobotStatus();
+                    if (status != null) {
+                        EventBus.getDefault().post(new EventRbs(status));
+                        L.e("EVENTBUS 传输机器人状态数据" + status.toString());
                     }
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
         }
+    }
 
 
-
-    class LoadImageThread extends  Thread {
+    /*
+    load image Thread
+     */
+   private  class LoadImageThread extends Thread {
         @Override
         public void run() {
             super.run();
             if (DataTag.MYSQL_CONNECT_FLAG) {
                 try {
-                    byte[] img = Util.QueryHeadImageById( 1 );
+                    byte[] img = Util.QueryHeadImageById(1);
                     EventBus.getDefault().post(new EventPic(img));
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -101,14 +112,15 @@ public class ScalService extends Service {
             }
         }
     }
+
     /*
       stop service when close app
      */
-    class MyReceiver extends BroadcastReceiver {
+   public class MyReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            stopSelf();
+            ScalService.this.stopSelf();
         }
     }
 

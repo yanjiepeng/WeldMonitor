@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
     private List<ProduceStatus> datas;
     private List<TextView> statusTextviews;
     private List<RobotData> robotDatas ;
+    private List<String> times ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,13 +111,13 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         robotDatas = new ArrayList<RobotData>();
+        times = new ArrayList<String>();
 
 
         initProduceData();
         initView();
 
 
-        //连接数据库
         // 异步连接数据库 判断是否联网
         MyTask myTask = new MyTask(new MyTaskInterface() {
 
@@ -151,13 +152,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-    /*
-     加载图片
-     */
-
+      /**
+    	 * 加载图片
+    	 * @author Administrator
+    	 * @time 2016/7/4 14:41
+    	 */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void LoadHeadPic(EventPic eventPic) {
 
@@ -175,13 +174,17 @@ public class MainActivity extends AppCompatActivity {
 
         if (eventData.getData() != null){
             robotDatas.add(eventData.getData());
+            //将数据存储为横坐标 纵坐标
+
         }
 
     }
 
-    /*
-    初始化生产情况列表
-         */
+   /**
+   	 * 生产信息列表
+   	 * @author Administrator
+   	 * @time 2016/7/4 14:42
+   	 */
     private void initProduceData() {
 
         datas = new ArrayList<ProduceStatus>();
@@ -195,6 +198,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
+
 
     private void initView() {
 
@@ -572,5 +578,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         sendBroadcast(new Intent(MainActivity.this , ScalService.class));
-    }
+   }
 }

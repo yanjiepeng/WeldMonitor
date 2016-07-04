@@ -2,6 +2,7 @@ package com.zk.entity;
 
 /**
  * Created by Administrator on 2016/7/1.
+ * 生产任务数据实例
  */
 public class ProduceStatus {
 
