@@ -99,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
 
     private List<ProduceStatus> datas;
     private List<TextView> statusTextviews;
-    private List<RobotData> robotDatas ;
-    private List<String> times ;
+    private List<RobotData> robotDatas;
+    private List<String> times;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,23 +144,22 @@ public class MainActivity extends AppCompatActivity {
         //初始话数据图格式和数据
         initChartWidget(lcWeldelec);
         initChartWidget(lcWeldvol);
-        setData(20, 40, lcWeldelec);
-        setData(20, 50, lcWeldvol);
 
-        startService(new Intent(MainActivity.this , ScalService.class));
+
+        startService(new Intent(MainActivity.this, ScalService.class));
     }
 
 
-
-      /**
-    	 * 加载图片
-    	 * @author Administrator
-    	 * @time 2016/7/4 14:41
-    	 */
+    /**
+     * 加载图片
+     *
+     * @author Administrator
+     * @time 2016/7/4 14:41
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void LoadHeadPic(EventPic eventPic) {
 
-        if (eventPic.getPic()!=null) {
+        if (eventPic.getPic() != null) {
             ivAttendanceHead1.setImageBitmap(Util.Bytes2Bimap(eventPic.getPic()));
         }
     }
@@ -170,21 +169,34 @@ public class MainActivity extends AppCompatActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void initChartDatas(EventData eventData) {
-            //增加采集的数据到list中
+        //增加采集的数据到list中
 
-        if (eventData.getData() != null){
+        if (eventData.getData() != null) {
             robotDatas.add(eventData.getData());
             //将数据存储为横坐标 纵坐标
+            times.add(eventData.getData().getCheck_time().substring(11,21));
+            robotDatas.add(eventData.getData());
+            if (times.size() >200) {
+                times.clear();
+            }
+            if (robotDatas.size() > 200) {
+                robotDatas.clear();
+            }
 
+            setData(times.size(), 1, lcWeldelec);
+            setData(times.size(), 2, lcWeldvol);
+            lcWeldelec.invalidate();
+            lcWeldvol.invalidate();
         }
 
     }
 
-   /**
-   	 * 生产信息列表
-   	 * @author Administrator
-   	 * @time 2016/7/4 14:42
-   	 */
+    /**
+     * 生产信息列表
+     *
+     * @author Administrator
+     * @time 2016/7/4 14:42
+     */
     private void initProduceData() {
 
         datas = new ArrayList<ProduceStatus>();
@@ -198,8 +210,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-
 
 
     private void initView() {
@@ -296,72 +306,97 @@ public class MainActivity extends AppCompatActivity {
     /*
        初始化曲线图数据
      */
-    private void setData(int count, float range, LineChart mChart) {
-
+    private void setData(int count, int id, LineChart mChart) {
+        //初始化x轴数据
         ArrayList<String> xVals = new ArrayList<String>();
         for (int i = 0; i < count; i++) {
-            xVals.add((i) + "");
+            xVals.add(times.get(i) + "");
         }
 
-        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
+        ArrayList<Entry> yVals1 = null;
+        ArrayList<Entry> yVals2 = null;
+        ArrayList<Entry> yVals3 = null;
+        ArrayList<Entry> yVals4 = null;
+        ArrayList<Entry> yVals5 = null;
+        ArrayList<Entry> yVals6 = null;
 
-        for (int i = 0; i < count; i++) {
-            float mult = range / 2f;
-            float val = (float) (Math.random() * mult) + 50;// + (float)
-            // ((mult *
-            // 0.1) / 10);
-            yVals1.add(new Entry(val, i));
+        if (id == 1) {
+            //初始化电流1
+            yVals1 = new ArrayList<Entry>();
+            for (int i = 0; i < count; i++) {
+                float val = (float) (robotDatas.get(i).getWeld_elec_1());        // + (float)
+                yVals1.add(new Entry(val, i));
+            }
+            //初始化电流2
+            yVals2 = new ArrayList<Entry>();
+            for (int i = 0; i < count; i++) {
+                float val = (float) (robotDatas.get(i).getWeld_elec_2());// + (float)
+                yVals2.add(new Entry(val, i));
+            }
+            //初始化电流3
+            yVals3 = new ArrayList<Entry>();
+            for (int i = 0; i < count; i++) {
+                float val = (float) (robotDatas.get(i).getWeld_elec_3());// + (float)
+                yVals3.add(new Entry(val, i));
+            }
+            //初始化电流4
+            yVals4 = new ArrayList<Entry>();
+            for (int i = 0; i < count; i++) {
+                float val = (float) (robotDatas.get(i).getWeld_elec_4());// + (float)
+                yVals4.add(new Entry(val, i));
+            }
+            //初始化电流5
+            yVals5 = new ArrayList<Entry>();
+            for (int i = 0; i < count; i++) {
+                float val = (float) (robotDatas.get(i).getWeld_elec_5());// + (float)
+                yVals5.add(new Entry(val, i));
+            }
+            //初始化电流6
+            yVals6 = new ArrayList<Entry>();
+            for (int i = 0; i < count; i++) {
+                float val = (float) (robotDatas.get(i).getWeld_elec_6());// + (float)
+                yVals6.add(new Entry(val, i));
+            }
+        } else if (id == 2) {
+
+            //初始化电压1
+            yVals1 = new ArrayList<Entry>();
+            for (int i = 0; i < count; i++) {
+                float val = (float) (robotDatas.get(i).getWeld_vol_1());        // + (float)
+                yVals1.add(new Entry(val, i));
+            }
+            //初始化电压2
+            yVals2 = new ArrayList<Entry>();
+            for (int i = 0; i < count; i++) {
+                float val = (float) (robotDatas.get(i).getWeld_vol_2());// + (float)
+                yVals2.add(new Entry(val, i));
+            }
+            //初始化电压3
+            yVals3 = new ArrayList<Entry>();
+            for (int i = 0; i < count; i++) {
+                float val = (float) (robotDatas.get(i).getWeld_vol_3());// + (float)
+                yVals3.add(new Entry(val, i));
+            }
+            //初始化电压4
+            yVals4 = new ArrayList<Entry>();
+            for (int i = 0; i < count; i++) {
+                float val = (float) (robotDatas.get(i).getWeld_vol_4());// + (float)
+                yVals4.add(new Entry(val, i));
+            }
+            //初始化电压5
+            yVals5 = new ArrayList<Entry>();
+            for (int i = 0; i < count; i++) {
+                float val = (float) (robotDatas.get(i).getWeld_vol_5());// + (float)
+                yVals5.add(new Entry(val, i));
+            }
+            //初始化电压6
+            yVals6 = new ArrayList<Entry>();
+            for (int i = 0; i < count; i++) {
+                float val = (float) (robotDatas.get(i).getWeld_vol_6());// + (float)
+                yVals6.add(new Entry(val, i));
+            }
         }
 
-        ArrayList<Entry> yVals2 = new ArrayList<Entry>();
-
-        for (int i = 0; i < count; i++) {
-            float mult = range;
-            float val = (float) (Math.random() * mult) + 450;// + (float)
-            // ((mult *
-            // 0.1) / 10);
-            yVals2.add(new Entry(val, i));
-        }
-
-        ArrayList<Entry> yVals3 = new ArrayList<Entry>();
-
-        for (int i = 0; i < count; i++) {
-            float mult = range;
-            float val = (float) (Math.random() * mult) + 250;// + (float)
-            // ((mult *
-            // 0.1) / 10);
-            yVals3.add(new Entry(val, i));
-        }
-
-        ArrayList<Entry> yVals4 = new ArrayList<Entry>();
-
-        for (int i = 0; i < count; i++) {
-            float mult = range;
-            float val = (float) (Math.random() * mult) + 150;// + (float)
-            // ((mult *
-            // 0.1) / 10);
-            yVals4.add(new Entry(val, i));
-        }
-
-        ArrayList<Entry> yVals5 = new ArrayList<Entry>();
-
-        for (int i = 0; i < count; i++) {
-            float mult = range;
-            float val = (float) (Math.random() * mult) + 590;// + (float)
-            // ((mult *
-            // 0.1) / 10);
-            yVals5.add(new Entry(val, i));
-        }
-
-        ArrayList<Entry> yVals6 = new ArrayList<Entry>();
-
-        for (int i = 0; i < count; i++) {
-            float mult = range;
-            float val = (float) (Math.random() * mult) + 120;// + (float)
-            // ((mult *
-            // 0.1) / 10);
-            yVals6.add(new Entry(val, i));
-        }
 
         LineDataSet set1, set2, set3, set4, set5, set6;
 
@@ -573,10 +608,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sendBroadcast(new Intent(MainActivity.this , ScalService.class));
-   }
+        sendBroadcast(new Intent(MainActivity.this, ScalService.class));
+    }
 }

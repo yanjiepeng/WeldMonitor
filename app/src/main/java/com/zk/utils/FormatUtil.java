@@ -46,6 +46,15 @@ public class FormatUtil {
         return retStrFormatNowDate;
     }
 
+    /*
+     返回今天的日期
+     */
+    public static String refTodayDate(  ) {
+        Date nowTime = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        String retStrFormatNowDate = sdFormatter.format(nowTime);
+        return retStrFormatNowDate;
+    }
 
     /*
      返回当前时间与设计时间的差值

@@ -21,6 +21,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.sql.SQLException;
 import java.sql.Time;
+import java.text.ParseException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -106,6 +107,7 @@ private class RobotDataThread extends TimerTask {
                 try {
                     byte[] img = Util.QueryHeadImageById(1);
                     EventBus.getDefault().post(new EventPic(img));
+                    L.e("Service获取到排版头像");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

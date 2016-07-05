@@ -3,7 +3,7 @@ package com.zk.entity;
 import java.util.Arrays;
 
 /**
- * Created by Administrator on 2016/6/30.
+ * Created by Yanjiepeng on 2016/6/30.
  * 用户实例
  */
 public class User {

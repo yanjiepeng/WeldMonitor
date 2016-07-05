@@ -9,10 +9,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import com.zk.entity.DataTag;
+import com.zk.entity.DutyWorker;
 import com.zk.entity.RobotData;
 import com.zk.entity.RobotStatus;
 import com.zk.entity.User;
@@ -114,11 +117,48 @@ public class Util {
 
     }
 
+
+    /**
+     * 查询今日的值班人员 信息（返回id集合）
+     *
+     * @author Yan jiepeng
+     * @time 2016/7/5 13:10
+     */
+    public static DutyWorker QueryDutyWorkerId() throws SQLException {
+
+        String today = FormatUtil.refTodayDate();
+        if (conn == null) {
+            return null;
+        }
+        Statement stmt = null;
+        ResultSet rs = null;
+        DutyWorker workGroup = null;
+        String sql = "select *  from duty where d_date = '" + today + "' ";
+
+        stmt = conn.createStatement();
+        if (stmt != null) {
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                workGroup = new DutyWorker();
+                workGroup.setDate(rs.getString("d_date"));
+                workGroup.setWorker1(rs.getString("d_worker1"));
+                workGroup.setWorker2(rs.getString("d_worker2"));
+                workGroup.setWorker3(rs.getString("d_worker3"));
+                workGroup.setWorker4(rs.getString("d_worker4"));
+            }
+        }
+
+        rs.close();
+        stmt.close();
+        return workGroup;
+
+    }
+
+
     /*
     请求用户的姓名 工号 数据 用于显示值班人员信息
  */
     public static User QueryUserData(int id) throws SQLException {
-
 
         User u = null;
         if (conn == null) {
@@ -128,7 +168,6 @@ public class Util {
         ResultSet rs = null;
 
         String sql = "select u_num,u_name  from userinfo where id = '" + id + "' ";
-
         stmt = conn.createStatement();
         if (stmt != null) {
             rs = stmt.executeQuery(sql);
@@ -136,11 +175,9 @@ public class Util {
                 u = new User(rs.getString("u_name"), rs.getString("u_num"));
             }
         }
-
         rs.close();
         stmt.close();
         return u;
-
     }
 
 
@@ -154,14 +191,14 @@ public class Util {
         }
         Statement stmt = null;
         ResultSet rs = null;
-        String sql = "select c_r1 , c_r2 , c_r3 ,c_r4 ,c_r5 , c_r6 , v_r1 ,v_r2 ,v_r3 , v_r4 ,v_r5 ,v_r6 , t_run from linestate";
+        String sql = "select c_r1 , c_r2 , c_r3 ,c_r4 ,c_r5 , c_r6 , v_r1 ,v_r2 ,v_r3 , v_r4 ,v_r5 ,v_r6 , t_run from linestate where line = '1' ";
 
         stmt = conn.createStatement();
         RobotData data = new RobotData();
         if (stmt != null) {
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
-
+                //电流
                 data.setCheck_time(rs.getTimestamp("t_run").toString());
                 data.setWeld_elec_1(rs.getDouble("c_r1"));
                 data.setWeld_elec_2(rs.getDouble("c_r2"));
@@ -169,7 +206,7 @@ public class Util {
                 data.setWeld_elec_4(rs.getDouble("c_r4"));
                 data.setWeld_elec_5(rs.getDouble("c_r5"));
                 data.setWeld_elec_6(rs.getDouble("c_r6"));
-
+                //电压
                 data.setWeld_vol_1(rs.getDouble("v_r1"));
                 data.setWeld_vol_2(rs.getDouble("v_r2"));
                 data.setWeld_vol_3(rs.getDouble("v_r3"));
