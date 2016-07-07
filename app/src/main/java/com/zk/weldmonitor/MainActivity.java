@@ -23,6 +23,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.zk.EventBus.EventData;
+import com.zk.EventBus.EventList;
 import com.zk.EventBus.EventPic;
 import com.zk.EventBus.EventRbs;
 import com.zk.adapter.ProduceStatusAdapter;
@@ -123,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void doUi() {
-                // TODO Auto-generated method stub
                 if (DataTag.MYSQL_CONNECT_FLAG) {
                     L.e("数据库已连接");
                 } else {
@@ -133,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public String[] doBackGround() {
-                // TODO Auto-generated method stub
                 Util.onConn();
                 return null;
             }
@@ -151,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * 加载图片
+     * 更新值班人员图片
      *
      * @author Administrator
      * @time 2016/7/4 14:41
@@ -159,8 +158,10 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void LoadHeadPic(EventPic eventPic) {
 
-        if (eventPic.getPic() != null) {
-            ivAttendanceHead1.setImageBitmap(Util.Bytes2Bimap(eventPic.getPic()));
+        if (eventPic.getImg_map() != null) {
+            ivAttendanceHead1.setImageBitmap(Util.Bytes2Bimap(eventPic.getImg_map().get("d1")));
+            ivAttendanceHead2.setImageBitmap(Util.Bytes2Bimap(eventPic.getImg_map().get("d2")));
+            ivAttendanceHead3.setImageBitmap(Util.Bytes2Bimap(eventPic.getImg_map().get("d3")));
         }
     }
 
@@ -176,12 +177,7 @@ public class MainActivity extends AppCompatActivity {
             //将数据存储为横坐标 纵坐标
             times.add(eventData.getData().getCheck_time().substring(11,21));
             robotDatas.add(eventData.getData());
-            if (times.size() >200) {
-                times.clear();
-            }
-            if (robotDatas.size() > 200) {
-                robotDatas.clear();
-            }
+
 
             setData(times.size(), 1, lcWeldelec);
             setData(times.size(), 2, lcWeldvol);
@@ -519,6 +515,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+       /**
+       	 * 更新值班人员信息
+       	 * @author Yan jiepeng
+       	 * @time 2016/7/7 10:04
+       	 */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void UpdateDutyInfo(EventList eventList) {
+
+        if (eventList.getList() != null) {
+            tvAttendanceId1.setText(eventList.getList().get(0).getNum());
+            tvAttendanceId2.setText(eventList.getList().get(1).getNum());
+            tvAttendanceId3.setText(eventList.getList().get(2).getNum());
+
+            tvAttendanceName1.setText(eventList.getList().get(0).getName());
+            tvAttendanceName2.setText(eventList.getList().get(1).getName());
+            tvAttendanceName3.setText(eventList.getList().get(2).getName());
+        }
+    }
+
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void UpdateRobotStateUi(EventRbs event) {
 
@@ -613,4 +629,5 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         sendBroadcast(new Intent(MainActivity.this, ScalService.class));
     }
+
 }

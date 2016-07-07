@@ -92,7 +92,7 @@ public class Util {
     /*
      请求用户数据
      */
-    public static byte[] QueryHeadImageById(int id) throws SQLException {
+    public static byte[] QueryHeadImageById(String id) throws SQLException {
 
         byte[] img = new byte[1024];
         if (conn == null) {
@@ -101,7 +101,7 @@ public class Util {
         Statement stmt = null;
         ResultSet rs = null;
 
-        String sql = "select image  from userinfo where id = '" + id + "' ";
+        String sql = "select image  from userinfo where u_num = '" + id + "' ";
 
         stmt = conn.createStatement();
         if (stmt != null) {
@@ -158,7 +158,7 @@ public class Util {
     /*
     请求用户的姓名 工号 数据 用于显示值班人员信息
  */
-    public static User QueryUserData(int id) throws SQLException {
+    public static User QueryUserData(String num) throws SQLException {
 
         User u = null;
         if (conn == null) {
@@ -167,7 +167,7 @@ public class Util {
         Statement stmt = null;
         ResultSet rs = null;
 
-        String sql = "select u_num,u_name  from userinfo where id = '" + id + "' ";
+        String sql = "select u_num,u_name  from userinfo where u_num = '" + num + "' ";
         stmt = conn.createStatement();
         if (stmt != null) {
             rs = stmt.executeQuery(sql);
@@ -252,7 +252,6 @@ public class Util {
             }
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -266,7 +265,6 @@ public class Util {
                 stmt = null;
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return c_User;
