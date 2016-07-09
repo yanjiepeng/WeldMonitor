@@ -1,14 +1,18 @@
 package com.zk.weldmonitor;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +26,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.zk.EventBus.EventData;
 import com.zk.EventBus.EventList;
 import com.zk.EventBus.EventPic;
@@ -109,8 +114,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initActionBar();
+        //设置通知栏颜色
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+        }
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setStatusBarTintResource(R.color.colorPrimaryDark);//通知栏所需颜色
+
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
+
         robotDatas = new ArrayList<RobotData>();
         times = new ArrayList<String>();
 
@@ -127,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 if (DataTag.MYSQL_CONNECT_FLAG) {
                     L.e("数据库已连接");
                 } else {
-                    Toast.makeText(MainActivity.this, "网络错误", 0).show();
+                    Toast.makeText(MainActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -144,10 +158,23 @@ public class MainActivity extends AppCompatActivity {
         initChartWidget(lcWeldelec);
         initChartWidget(lcWeldvol);
 
-
         startService(new Intent(MainActivity.this, ScalService.class));
     }
 
+
+
+    @TargetApi(19)
+    private void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
+    }
 
     /**
      * 更新值班人员图片
@@ -175,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         if (eventData.getData() != null) {
             robotDatas.add(eventData.getData());
             //将数据存储为横坐标 纵坐标
-            times.add(eventData.getData().getCheck_time().substring(11,21));
+            times.add(eventData.getData().getCheck_time().substring(11, 21));
             robotDatas.add(eventData.getData());
 
 
@@ -515,11 +542,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-       /**
-       	 * 更新值班人员信息
-       	 * @author Yan jiepeng
-       	 * @time 2016/7/7 10:04
-       	 */
+    /**
+     * 更新值班人员信息
+     *
+     * @author Yan jiepeng
+     * @time 2016/7/7 10:04
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void UpdateDutyInfo(EventList eventList) {
 
