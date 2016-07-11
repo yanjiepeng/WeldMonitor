@@ -10,12 +10,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import com.zk.entity.DataTag;
 import com.zk.entity.DutyWorker;
+import com.zk.entity.ProduceFigure;
+import com.zk.entity.ProduceStatus;
 import com.zk.entity.RobotData;
 import com.zk.entity.RobotStatus;
 import com.zk.entity.User;
@@ -124,7 +128,7 @@ public class Util {
      * @author Yan jiepeng
      * @time 2016/7/5 13:10
      */
-    public static DutyWorker QueryDutyWorkerId() throws SQLException {
+    public static DutyWorker QueryDutyWorkerInfo() throws SQLException {
 
         String today = FormatUtil.refTodayDate();
         if (conn == null) {
@@ -158,7 +162,7 @@ public class Util {
     /*
     请求用户的姓名 工号 数据 用于显示值班人员信息
  */
-    public static User QueryUserData(String num) throws SQLException {
+    public static User QueryUserDataByNum(String num) throws SQLException {
 
         User u = null;
         if (conn == null) {
@@ -220,6 +224,73 @@ public class Util {
         stmt.close();
         return data;
     }
+
+    /**
+     * 查询生产订单信息(当日)
+     *
+     * @author Yan jiepeng
+     * @time 2016/7/11 9:27
+     */
+
+    public static List<ProduceStatus> QueryScheduleData() throws SQLException {
+
+        ProduceStatus ps = null;
+        List<ProduceStatus> list = new ArrayList<>();
+        if (conn == null) {
+            return null;
+        }
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        String sql = "select *  from schedule where s_date = '" + FormatUtil.refTodayDate() + "' ";
+        stmt = conn.createStatement();
+        if (stmt != null) {
+            rs = stmt.executeQuery(sql);
+            list.clear();
+            while (rs.next()) {
+                ps = new ProduceStatus();
+                ps.setId(rs.getInt("id"));
+                if (rs.getInt("s_state") == 0) {
+                    ps.setStatus("生产中");
+                } else {
+                    ps.setStatus("生产完成");
+                }
+                ps.setTime(rs.getDate("s_date").toString());
+                ps.setName(rs.getString("s_type"));
+                list.add(ps);
+            }
+        }
+        rs.close();
+        stmt.close();
+        return list;
+    }
+
+       /**
+       	 * 生产数量统计（当前正在生产的）
+       	 * @author Yan jiepeng
+       	 * @time 2016/7/11 9:58
+       	 */
+       public static ProduceFigure QueryProduceFigure() throws SQLException {
+
+           ProduceFigure pf = null ;
+           if (conn == null) {
+               return null;
+           }
+           Statement stmt = null;
+           ResultSet rs = null;
+
+           String sql = "select s_num,s_num_out from schedule where s_state = 0";
+           stmt = conn.createStatement();
+           if (stmt != null) {
+               rs = stmt.executeQuery(sql);
+               while (rs.next()) {
+                    pf = new ProduceFigure(rs.getInt("s_num")  , rs.getInt("s_num_out"));
+               }
+           }
+           rs.close();
+           stmt.close();
+           return pf;
+       }
 
     /*
 

@@ -8,10 +8,15 @@ import android.os.IBinder;
 
 import com.zk.EventBus.EventData;
 import com.zk.EventBus.EventList;
+import com.zk.EventBus.EventList2;
+import com.zk.EventBus.EventMsg;
 import com.zk.EventBus.EventPic;
+import com.zk.EventBus.EventProduceFigure;
 import com.zk.EventBus.EventRbs;
 import com.zk.entity.DataTag;
 import com.zk.entity.DutyWorker;
+import com.zk.entity.ProduceFigure;
+import com.zk.entity.ProduceStatus;
 import com.zk.entity.RobotData;
 import com.zk.entity.RobotStatus;
 import com.zk.entity.User;
@@ -50,6 +55,9 @@ public class ScalService extends Service {
         timer.schedule(new GetDutyTask(), 2000);
         timer.schedule(new RobotStautsTask(), 0, 5000);
         timer.schedule(new RobotDataThread(), 0, 5000);
+        timer.schedule(new ScheduleTask() , 0 ,10000);
+        timer.schedule(new ProduceFigureTask() , 0 ,10000);
+
 
 
 
@@ -102,6 +110,8 @@ public class ScalService extends Service {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+            }else {
+                EventBus.getDefault().post(new EventMsg("error"));
             }
         }
     }
@@ -115,16 +125,28 @@ public class ScalService extends Service {
         @Override
         public void run() {
             Map<String , byte[]>  map = new HashMap<String , byte[]>();
+            byte[] img1 = new byte[1024], img2 = new byte[1024], img3 = new byte[1024];
             if (DataTag.MYSQL_CONNECT_FLAG) {
                 try {
-                    DutyWorker duty = Util.QueryDutyWorkerId();
-                    byte[] img1 = Util.QueryHeadImageById(duty.getWorker1());
-                    byte[] img2 = Util.QueryHeadImageById(duty.getWorker2());
-                    byte[] img3 = Util.QueryHeadImageById(duty.getWorker3());
-                    map.clear();
-                    map.put("d1" , img1);
-                    map.put("d2" , img2);
-                    map.put("d3" , img3);
+                    DutyWorker duty = Util.QueryDutyWorkerInfo();
+                    if (duty != null && duty.getWorker1() != "") {
+                        String d1[] = duty.getWorker1().split("\\|");
+                        if (d1[0] != null && d1[0] != "") {
+                            img1 = Util.QueryHeadImageById(d1[0]);
+                        }
+                        String d2[] = duty.getWorker2().split("\\|");
+                        if (d2[0] != null && d2[0] != "") {
+                            img2 = Util.QueryHeadImageById(d2[0]);
+                        }
+                        String d3[] = duty.getWorker3().split("\\|");
+                        if (d3[0] != null && d3[0] != "") {
+                            img3 = Util.QueryHeadImageById(d3[0]);
+                        }
+                        map.clear();
+                        map.put("d1", img1);
+                        map.put("d2", img2);
+                        map.put("d3", img3);
+                    }
                     L.e("Service获取到排版头像");
                     if (map != null && map.size() != 0) {
                         EventBus.getDefault().post(new EventPic(map));
@@ -150,16 +172,22 @@ public class ScalService extends Service {
         public void run() {
             if (DataTag.MYSQL_CONNECT_FLAG) {
                 try {
-                    DutyWorker dutyWorker = Util.QueryDutyWorkerId();
-                    u1 = Util.QueryUserData(dutyWorker.getWorker1());
-                    u2 = Util.QueryUserData(dutyWorker.getWorker2());
-                    u3 = Util.QueryUserData(dutyWorker.getWorker3());
-                    u4 = Util.QueryUserData(dutyWorker.getWorker2());
-                    dutyList.clear();
-                    dutyList.add(u1);
-                    dutyList.add(u2);
-                    dutyList.add(u3);
-                    dutyList.add(u4);
+                    DutyWorker dutyWorker = Util.QueryDutyWorkerInfo();
+                    if (dutyWorker!=null && dutyWorker.getWorker1()!="") {
+                        String user1[] = dutyWorker.getWorker1().split("\\|");
+                        u1 = new User(user1[1], user1[0]);
+                        String user2[] = dutyWorker.getWorker2().split("\\|");
+                        u2 = new User(user2[1], user2[0]);
+                        String user3[] = dutyWorker.getWorker3().split("\\|");
+                        u3 = new User(user3[1], user3[0]);
+//                        String user4[] = dutyWorker.getWorker4().split("|");
+//                        u4 = new User(user4[1], user4[0]);
+                        dutyList.clear();
+                        dutyList.add(u1);
+                        dutyList.add(u2);
+                        dutyList.add(u3);
+                        dutyList.add(u4);
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -168,6 +196,57 @@ public class ScalService extends Service {
                 L.e("值班人员信息",dutyList.size() +"");
                 EventBus.getDefault().post(new EventList(dutyList));
             }
+        }
+    }
+
+
+    /*
+            生产任务
+     */
+
+    private class ScheduleTask extends TimerTask {
+
+        List<ProduceStatus> list = new ArrayList<>() ;
+        @Override
+        public void run() {
+
+            if (DataTag.MYSQL_CONNECT_FLAG) {
+                try {
+                    list = Util.QueryScheduleData();
+                    if (list !=null && list.size()!=0 ) {
+                        L.e("生产订单列表数据："+list.size());
+                        EventBus.getDefault().post(new EventList2(list));
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+
+    /*
+      生产量任务
+     */
+    private class ProduceFigureTask extends TimerTask {
+
+        ProduceFigure pf = null;
+        @Override
+        public void run() {
+
+            if(DataTag.MYSQL_CONNECT_FLAG) {
+                try {
+                    pf = Util.QueryProduceFigure();
+                    if (pf != null ){
+                        L.e("生产数量统计"+pf.toString());
+                        EventBus.getDefault().post(new EventProduceFigure(pf));
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
         }
     }
 

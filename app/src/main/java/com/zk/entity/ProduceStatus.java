@@ -6,7 +6,7 @@ package com.zk.entity;
  */
 public class ProduceStatus {
 
-    String id ;
+    int id ;
     String name;
     String time ;
     String status ;
@@ -14,18 +14,18 @@ public class ProduceStatus {
     public ProduceStatus() {
     }
 
-    public ProduceStatus(String id, String name, String status, String time) {
+    public ProduceStatus(int id, String name, String status, String time) {
         this.id = id;
         this.name = name;
         this.status = status;
         this.time = time;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

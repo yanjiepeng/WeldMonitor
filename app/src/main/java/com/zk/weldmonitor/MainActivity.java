@@ -29,7 +29,10 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.zk.EventBus.EventData;
 import com.zk.EventBus.EventList;
+import com.zk.EventBus.EventList2;
+import com.zk.EventBus.EventMsg;
 import com.zk.EventBus.EventPic;
+import com.zk.EventBus.EventProduceFigure;
 import com.zk.EventBus.EventRbs;
 import com.zk.adapter.ProduceStatusAdapter;
 import com.zk.entity.DataTag;
@@ -48,7 +51,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -105,8 +110,12 @@ public class MainActivity extends AppCompatActivity {
 
     private List<ProduceStatus> datas;
     private List<TextView> statusTextviews;
+
+
     private List<RobotData> robotDatas;
-    private List<String> times;
+    private Queue<String> timeQueue;
+    private Queue<RobotData> robotDatasQueue;
+    ProduceStatusAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,11 +134,13 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
 
-        robotDatas = new ArrayList<RobotData>();
-        times = new ArrayList<String>();
+        robotDatas = new ArrayList<>() ;
+        timeQueue = new LinkedList<>();
+        robotDatasQueue = new LinkedList<>();
 
 
-        initProduceData();
+
+        //initProduceData();
         initView();
 
 
@@ -176,6 +187,19 @@ public class MainActivity extends AppCompatActivity {
         win.setAttributes(winParams);
     }
 
+    /*
+       字符串消息接受
+     */
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void NetWorkState(EventMsg eventMsg) {
+        if (eventMsg.getMsg() != null && eventMsg.getMsg() != "" ) {
+            if (eventMsg.getMsg().equals("error")) {
+                Toast.makeText(MainActivity.this, "网络异常！", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     /**
      * 更新值班人员图片
      *
@@ -200,14 +224,24 @@ public class MainActivity extends AppCompatActivity {
         //增加采集的数据到list中
 
         if (eventData.getData() != null) {
-            robotDatas.add(eventData.getData());
             //将数据存储为横坐标 纵坐标
-            times.add(eventData.getData().getCheck_time().substring(11, 21));
-            robotDatas.add(eventData.getData());
+            if(timeQueue.size() >30) {
+                timeQueue.poll();
+            }
+            if (robotDatasQueue.size() > 30){
+                robotDatasQueue.poll();
+            }
 
+            timeQueue.offer(eventData.getData().getCheck_time().substring(11, 21));
+            robotDatasQueue.offer(eventData.getData());
 
-            setData(times.size(), 1, lcWeldelec);
-            setData(times.size(), 2, lcWeldvol);
+            robotDatas.clear();
+            for (RobotData data : robotDatasQueue) {
+                robotDatas.add(data);
+            }
+
+            setData(timeQueue.size(), 1, lcWeldelec);
+            setData(timeQueue.size(), 2, lcWeldvol);
             lcWeldelec.invalidate();
             lcWeldvol.invalidate();
         }
@@ -220,19 +254,31 @@ public class MainActivity extends AppCompatActivity {
      * @author Administrator
      * @time 2016/7/4 14:42
      */
-    private void initProduceData() {
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void initProduceData(EventList2 eventList2) {
 
         datas = new ArrayList<ProduceStatus>();
-        for (int i = 0; i < 10; i++) {
-            ProduceStatus ps = new ProduceStatus();
-            ps.setId("" + i);
-            ps.setName("工件" + i);
-            ps.setTime(FormatUtil.refFormatNowDate());
-            ps.setStatus("正常");
-            datas.add(ps);
+        if (eventList2.getList() != null) {
+           datas = eventList2.getList();
         }
-
+        mAdapter = new ProduceStatusAdapter(this, datas);
+        lvProduce.setAdapter(mAdapter);
     }
+    
+       /**
+       	 * 生产数量
+       	 * @author Yan jiepeng
+       	 * @time 2016/7/11 10:12
+       	 */
+       @Subscribe(threadMode = ThreadMode.MAIN)
+       public void UpdateProduceFigure(EventProduceFigure event) {
+           if (event.getPf() != null) {
+               tvProTotal.setText(event.getPf().getTotal() + "");
+               tvProProduced.setText(event.getPf().getAlready() + "");
+               tvProRemain.setText(event.getPf().getTotal() - event.getPf().getAlready()+"");
+           }
+       }
 
 
     private void initView() {
@@ -248,11 +294,10 @@ public class MainActivity extends AppCompatActivity {
         statusTextviews.add(tvWeld6State);
         statusTextviews.add(tvCarrierState);
         statusTextviews.add(tvMaterialrobotState);
-        //设置RecylerView为list效果并设置分割线
+        //设置Recyler View为list效果并设置分割线
         lvProduce.setLayoutManager(new LinearLayoutManager(this));
         lvProduce.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-        ProduceStatusAdapter mAdapter = new ProduceStatusAdapter(this, datas);
-        lvProduce.setAdapter(mAdapter);
+
     }
 
     private void initChartWidget(LineChart lcWeldelec) {
@@ -332,8 +377,8 @@ public class MainActivity extends AppCompatActivity {
     private void setData(int count, int id, LineChart mChart) {
         //初始化x轴数据
         ArrayList<String> xVals = new ArrayList<String>();
-        for (int i = 0; i < count; i++) {
-            xVals.add(times.get(i) + "");
+        for (String str : timeQueue) {
+            xVals.add(str);
         }
 
         ArrayList<Entry> yVals1 = null;
